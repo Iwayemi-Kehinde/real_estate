@@ -1,0 +1,20 @@
+{
+  "name": "real_estate",
+  "version": "1.0.0",
+  "description": "MERN estate_app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:dev": "nodemon ./server.js",
+    "start:production": "node ./server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/Iwayemi-Kehinde/real_estate.git"
+  },
+  "author": "Kehinde Iwayemi",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}
