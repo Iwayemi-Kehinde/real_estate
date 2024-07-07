@@ -3,6 +3,7 @@ import { Request, Response, NextFunction } from "express"
 import dotenv from "dotenv"
 dotenv.config()
 import connectDB from "./db/db"
+import cors from "cors"
 import { userRouter } from "./routes/user.route"
 import { authRouter } from "./routes/auth.route"
 
@@ -20,6 +21,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   next()
 })
 app.use(express.json())
+app.use(cors())
 app.use("/api/user", userRouter)
 app.use("/api/auth", authRouter)
 app.use((err:any, req:Request, res:Response, next:NextFunction) => {

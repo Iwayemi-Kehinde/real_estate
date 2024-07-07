@@ -12,6 +12,7 @@
   "author": "Kehinde Iwayemi",
   "license": "MIT",
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
     "@types/express": "^4.17.21",
     "@types/node": "^20.14.10",
     "nodemon": "^3.1.4",
