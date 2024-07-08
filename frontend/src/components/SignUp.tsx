@@ -21,6 +21,7 @@ const SignUp = () => {
         body: JSON.stringify(formData)
       })
       const data = await res.json()
+      console.log(data)
       if (data.success === false) {
         setError(data.message)
         return 
@@ -39,20 +40,20 @@ const SignUp = () => {
         <h2 className="text-gray-800 mb-10 text-center">CREATE AN ACCOUNT</h2>
         <form onSubmit={handleSubmit} className="bg-white rounded-lg w-[500px] h-[500px] py-6 px-12">
           <div className="mb-[12px]">
-            <label className="block text-lg">Username:</label>
+            <label className="block text-lg">username:</label>
             <input type="text" className="w-full text-base rounded-sm border border-gray-400 border-solid focus:border-blue-500  p-2 outline-none" placeholder="username" onChange={ handleChange}  id="username"/>
           </div>
 
           
           <div className="mb-[12px]">
-            <label className="block text-lg">Email:</label>
+            <label className="block text-lg">email:</label>
             <input type="email" required className="w-full text-base rounded-sm border border-gray-400 border-solid focus:border-blue-500  p-2 outline-none" placeholder="email" id="email" onChange={ handleChange}/>
           </div>
 
 
 
           <div className="mb-[12px]">
-            <label className="block text-lg">Password:</label>
+            <label className="block text-lg">password:</label>
             <input type="password" className="w-full text-base rounded-sm border border-gray-400 border-solid focus:border-blue-500  p-2 outline-none" placeholder="password" id="password" onChange={ handleChange}/>
           </div>
 
@@ -61,7 +62,7 @@ const SignUp = () => {
 
 
           <div className="mb-[12px]">
-            <label className="block text-lg">Confirm Password:</label>
+            <label className="block text-lg">confirm password:</label>
             <input type="text" className="w-full text-base rounded-sm border border-gray-400 border-solid focus:border-blue-500  p-2 outline-none" placeholder="confirm password" id="confirmPassword" onChange={ handleChange} />
           </div>
 

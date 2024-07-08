@@ -10,7 +10,17 @@ export const signup = async (
   next: NextFunction
 ) => {
   try {
-    const { username, password, email } = req.body;
+    const { username, password, email, confirmPassword } = req.body;
+
+    if (!username || !password || !email || !confirmPassword) {
+      return next(errorHandler(400, "Please fill all fields"))
+    }
+    if (password && password.length < 6) {
+      return next(errorHandler(400, "Password must contain a minimum of 6 character"))
+    }
+    if (password !== confirmPassword) {
+      return next(errorHandler(400, "Password must be same"))
+    }
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = {
       username,
@@ -18,7 +28,7 @@ export const signup = async (
       email,
     };
     const user = await User.create(newUser);
-    res.status(201).json({ message: "user created successfully" });
+    res.status(201).json({message: "User created successfully"});
   } catch (error: any) {
     next(error);
   }
@@ -37,7 +47,7 @@ export const signin = async (
     }
     const passwordValid = await bcrypt.compare(password, user.password);
     if (!passwordValid) {
-      return next(errorHandler(401, "wrong credentials"));
+      return next(errorHandler(401, "wrong password"));
     }
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET)
     const {password: pass, ...rest} = user
