@@ -11,6 +11,12 @@ import {
   updateUserStart,
   updateUserSuccess,
   updateUserFaliure,
+  deleteUserFaliure,
+  deleteUserStart,
+  deleteUserSuccess,
+  signOutFaliure,
+  signOutStart,
+  signOutSuccess
 } from "../redux/user/userSlice";
 import { useDispatch } from "react-redux";
 const Profile = () => {
@@ -35,6 +41,21 @@ const Profile = () => {
     }
   }, [file]);
 
+  const handleSignOut = async () => {
+    try {
+      dispatch(signOutStart())
+      const res = await fetch("localhost:3000/auth/signout")
+      const data = await res.json()
+      if (data.success === false) {
+        dispatch(signOutFaliure(data.message))
+        return
+      }
+      dispatch(signOutSuccess(data.success))
+    } catch (error) {
+
+    }
+  }
+
   function handleFileUpload(file: any) {
     const storage = getStorage(app);
     const filename = new Date().getTime() + file.name;
@@ -57,6 +78,23 @@ const Profile = () => {
     };
   }
   const fileRef = useRef(null);
+
+  const handleDelete = async (e) => {
+    try {
+      dispatch(deleteUserStart())
+      const response = await fetch(`localhost:3000/api/user/delete/${currentUser._id}`, {
+        method: "DELETE"
+      })
+      const data = await response.json()
+      if (data.success === false) {
+        dispatch(deleteUserFaliure(data.message))
+        return
+      }
+      dispatch(deleteUserSuccess(data))
+    } catch (error) {
+      dispatch(deleteUserFaliure(error.message))
+    }
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -171,9 +209,9 @@ const Profile = () => {
       </form>
 
       <div className="flex justify-between mt-5">
-        <span className="text-red-700 cursor-pointer">Delete account</span>
+        <span className="text-red-700 cursor-pointer" onClick={handleDelete}>Delete account</span>
 
-        <span className="text-red-700 cursor-pointer">Signout</span>
+        <span className="text-red-700 cursor-pointer"onClick={handleSignOut}>Signout</span>
       </div>
 
       <p className="text-red-700 mt-5 ">{error ? error : ""}</p>
