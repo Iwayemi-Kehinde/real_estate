@@ -6,13 +6,17 @@ export const test = (req: Request, res: Response, next: NextFunction) => {
   res.send("hello")
 }
 
-export const updateUserInfo = async (req: Request, res:Response, next: NextFunction) => {
+interface CustomRequest extends Request{
+  user?: any;
+}
+
+export const updateUserInfo = async (req: CustomRequest, res:Response, next: NextFunction) => {
   if (req.user.id !== req.params.id) {
     return next(errorHandler(401, "You can only update your own update"))
   }
   try {
     if (req.body.password) {
-      req.body.password = bcrypt.hashSync(req.body.password, 10)
+      req.body.password = await bcrypt.hash(req.body.password, 10)
     }
 
     //why not bcrypt.compare || hash
@@ -25,7 +29,10 @@ export const updateUserInfo = async (req: Request, res:Response, next: NextFunct
         avatar: req.body.avatar
        }
     }, { new: true })
-    const {password, ...rest} = updatedUser._doc
+    if (updatedUser) {
+      const { password: string, ...rest } = updatedUser._doc
+      res.json(rest)
+    }
   } catch (error) {
     next(error)
   }

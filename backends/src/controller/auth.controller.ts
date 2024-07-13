@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 import { errorHandler } from "../utils/error.ts";
 import jwt from "jsonwebtoken"
 
-const JWT_SECRET = process.env.JWT_SECRET
+const JWT_SECRET = process.env.JWT_SECRET  || "wdsjbyug37t723GAW7ED352R9038GYhugy"
 
 export const signup = async (
   req: Request,
@@ -48,8 +48,7 @@ export const signup = async (
         email,
       };
   
-      // Create the user
-      const user = await User.create(newUser);
+      await User.create(newUser);
       res.status(201).json({ message: "User created successfully" });
   } catch (error: any) {
     next(error);
@@ -71,7 +70,7 @@ export const signin = async (
     if (!passwordValid) {
       return next(errorHandler(401, "Incorrect password"));
     }
-    const token = jwt.sign({ id: user._id }, "wdsjbyug37t723GAW7ED352R9038GYhugy")
+    const token = jwt.sign({ id: user._id }, JWT_SECRET)
     const {password: pass, ...rest} = user.toObject()
     res.cookie("access_token", token, {httpOnly: true}).status(200).json(rest)
   } catch (error) {
@@ -80,7 +79,7 @@ export const signin = async (
 };
 
 //here: apart from using next for error handling what can i use next to do in this context
-export const signout = async (req, res, next) => {
+export const signout = async (req: Request, res: Response, next: NextFunction) => {
   try {
   res.clearCookie("access_token")
   res.status(200).json("User has been logged out")

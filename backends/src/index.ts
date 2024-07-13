@@ -7,6 +7,8 @@ import cors from "cors"
 import cookieParser from "cookie-parser" 
 import { userRouter } from "./routes/user.route"
 import { authRouter } from "./routes/auth.route"
+import { listRouter } from "./routes/list.route"
+
 
 const PORT = process.env.PORT || 5000
 
@@ -27,6 +29,7 @@ app.use(express.json())
 app.use(cors())
 app.use("/api/user", userRouter)
 app.use("/api/auth", authRouter)
+app.use("/api/listing", listRouter)
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   const statusCode = err.statusCode || 500;
   const message = err.message || "Internal server error";
