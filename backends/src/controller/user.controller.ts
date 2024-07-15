@@ -19,8 +19,10 @@ export const updateUserInfo = async (req: CustomRequest, res:Response, next: Nex
       req.body.password = await bcrypt.hash(req.body.password, 10)
     }
 
-    //why not bcrypt.compare || hash
 
+
+
+    
     const updatedUser = await User.findByIdAndUpdate(req.params.id, {
       $set: {
         username: req.body.username,
@@ -30,7 +32,7 @@ export const updateUserInfo = async (req: CustomRequest, res:Response, next: Nex
        }
     }, { new: true })
     if (updatedUser) {
-      const { password: string, ...rest } = updatedUser._doc
+      const { password: string, ...rest } = updatedUser.toObject()
       res.json(rest)
     }
   } catch (error) {
@@ -39,7 +41,7 @@ export const updateUserInfo = async (req: CustomRequest, res:Response, next: Nex
 }
 
 
-export const deleteUser = async(req: Request, res: Response, next: NextFunction) => {
+export const deleteUser = async(req: CustomRequest, res: Response, next: NextFunction) => {
   if(req.user.id !== req.params.id) return next(errorHandler(401, "You can only update your own account"))
   try {
     await User.findOneAndDelete(req.params.id)

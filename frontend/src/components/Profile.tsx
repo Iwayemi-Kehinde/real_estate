@@ -61,7 +61,7 @@ const Profile = () => {
     const filename = new Date().getTime() + file.name;
     const storageRef = ref(storage, filename);
     const uploadTask = uploadBytesResumable(storageRef, file);
-    uploadTask.on("state_changed", (snapShot) => {
+    uploadTask.on("state_changed", (snapShot: any) => {
       const progress = (snapShot.bytesTransferred / snapShot.totalBytes) * 100;
       console.log("Upload is " + progress + "% done");
 
@@ -79,7 +79,7 @@ const Profile = () => {
   }
   const fileRef = useRef(null);
 
-  const handleDelete = async (e) => {
+  const handleDelete = async (e: any) => {
     try {
       dispatch(deleteUserStart())
       const response = await fetch(`localhost:3000/api/user/delete/${currentUser._id}`, {
@@ -91,12 +91,12 @@ const Profile = () => {
         return
       }
       dispatch(deleteUserSuccess(data))
-    } catch (error) {
+    } catch (error: any) {
       dispatch(deleteUserFaliure(error.message))
     }
   }
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     try {
       dispatch(updateUserStart());
@@ -118,7 +118,7 @@ const Profile = () => {
       }
       dispatch(updateUserSuccess(data))
       setUpdateSuccess(true)
-    } catch (error) {
+    } catch (error: any) {
       dispatch(updateUserFaliure(error.message));
     }
   };
@@ -177,7 +177,7 @@ const Profile = () => {
             setFormData((prev) => {
               return {
                 ...prev,
-                [e.target.id]: e.target.value,
+                [e.target.id]: e.target.value
               };
             })
           }
