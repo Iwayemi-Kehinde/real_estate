@@ -18,7 +18,7 @@ const Signin = () => {
     email: "",
     password: ""
   })
- const {loading, error} = useSelector((state: any) => state.user)
+ const {loading} = useSelector((state: any) => state.user)
   const navigate = useNavigate()
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.id]: e.target.value })
@@ -46,7 +46,7 @@ const Signin = () => {
       navigate("/")
     } catch (error: any) {
       dispatch(signInFaliure(error.message))
-      toast.error("An error occured. Please try again later")
+      toast.error("An error occured. ")
     } 
   }
   return (

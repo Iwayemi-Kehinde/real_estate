@@ -1,5 +1,4 @@
 import mongoose from "mongoose"
-import { NumberContextImpl } from "twilio/lib/rest/pricing/v2/number"
 
 const listingSchema = new mongoose.Schema({
   name: {

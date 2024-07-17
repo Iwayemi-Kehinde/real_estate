@@ -22,7 +22,7 @@ export const signup = async (
       // Check if the username or email already exists
       const userExists = await User.findOne({ username });
       if (userExists) {
-        return next(errorHandler(400, "User already exists"));
+        return next(errorHandler(400, "Username already exists"));
       }
   
       const emailExists = await User.findOne({ email });

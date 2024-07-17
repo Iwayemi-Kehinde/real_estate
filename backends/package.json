@@ -2,7 +2,7 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "MERN real_estate",
-  "main": "dist/index.js",
+  "main": "src/index.js",
   "type": "commonjs",
   "scripts": {
     "start": "ts-node ./src/index.ts",

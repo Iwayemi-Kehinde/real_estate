@@ -9,8 +9,7 @@ const router = express.Router()
 router.get("/", test)
 router.post("/update/:id", verifyToken, updateUserInfo)
 //can i use .post to update and create why not put
-
-router.post("/delete/:id", verifyToken, deleteUser)
+router.delete("/delete/:id", verifyToken, deleteUser)
 
 export { router as userRouter}
 
